@@ -145,7 +145,8 @@ export const getStatusBadgeColor = (status: Provider["status"]) => {
 };
 
 const getServiceStatusBadgeColor = (status: ServiceConfig["status"]) => {
-    switch (status.toLowerCase()) {
+    const normalizedStatus = (status || 'unknown').toLowerCase();
+    switch (normalizedStatus) {
         case "running":
             return "bg-green-500/20 text-green-700 hover:bg-green-500/30";
         case "stopped":
@@ -153,6 +154,7 @@ const getServiceStatusBadgeColor = (status: ServiceConfig["status"]) => {
         case "error":
             return "bg-red-500/20 text-red-700 hover:bg-red-500/30";
         case "unknown":
+            return "bg-gray-500/20 text-gray-700 hover:bg-gray-500/30";
         default:
             return "bg-gray-500/20 text-gray-700 hover:bg-gray-500/30";
     }
@@ -835,7 +837,7 @@ export function MyProviders() {
                                                                         <div className="flex items-center gap-2">
                                                                             <Badge
                                                                                 className={`text-xs ${getServiceStatusBadgeColor(service.status)}`}>
-                                                                                {service.status.toLowerCase()}
+                                                                                {(service.status || 'unknown').toLowerCase()}
                                                                             </Badge>
                                                                             <DropdownMenu>
                                                                                 <DropdownMenuTrigger asChild>

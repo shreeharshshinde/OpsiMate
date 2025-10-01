@@ -1015,7 +1015,7 @@ const TVMode = ({
                         service.serviceStatus === 'unknown' && "border-yellow-500 text-yellow-700"
                       )}
                     >
-                      {isExtraCompact ? service.serviceStatus.charAt(0).toUpperCase() : service.serviceStatus.toUpperCase()}
+                      {isExtraCompact ? (service.serviceStatus || 'unknown').charAt(0).toUpperCase() : (service.serviceStatus || 'unknown').toUpperCase()}
                     </Badge>
 
                   </div>

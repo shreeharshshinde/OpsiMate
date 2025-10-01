@@ -142,12 +142,13 @@ const getK8SServices = async (_provider: Provider): Promise<DiscoveredService[]>
             const serviceIp = service.spec?.clusterIP;
             const selector = service.spec?.selector;
 
-            let serviceStatus = "Unknown";
+            let serviceStatus = "unknown";
             if (selector && Object.keys(selector).length > 0) {
                 const labelSelector = Object.entries(selector).map(([k, v]) => `${k}=${v}`).join(',');
                 const podsList = await k8sApi.listNamespacedPod({ namespace, labelSelector });
                 const items: k8s.V1Pod[] = podsList.items ?? [];
-                serviceStatus = [...new Set(items.map((i: k8s.V1Pod) => i.status?.phase || "Unknown"))].join(", ");
+                const phases = [...new Set(items.map((i: k8s.V1Pod) => i.status?.phase || "unknown"))];
+                serviceStatus = phases.length > 0 ? phases.join(", ") : "unknown";
             }
 
             return {

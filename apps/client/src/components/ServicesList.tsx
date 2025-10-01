@@ -89,10 +89,11 @@ export function ServicesList({ services, onStatusChange, onServiceClick, onDelet
                   "text-xs",
                   service.status === "running" && "bg-green-500/20 text-green-700",
                   service.status === "stopped" && "bg-gray-500/20 text-gray-700",
-                  service.status === "error" && "bg-red-500/20 text-red-700"
+                  service.status === "error" && "bg-red-500/20 text-red-700",
+                  (!service.status || service.status === "unknown") && "bg-gray-500/20 text-gray-700"
                 )}
               >
-                {service.status}
+                {service.status || 'unknown'}
               </Badge>
 
               {/* Dropdown menu */}
